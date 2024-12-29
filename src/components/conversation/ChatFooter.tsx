@@ -19,7 +19,7 @@ type ChatInputProps = {
 };
 
 function ChatInput({ setOpenPicker }: ChatInputProps) {
-  const [openAction, setOpenAction] = useState(false);
+  const [openAction, setOpenAction] = useState<boolean>(false);
   return (
     <StyledInput
       fullWidth={true}
@@ -73,7 +73,7 @@ function ChatInput({ setOpenPicker }: ChatInputProps) {
 
 export default function ChatFooter() {
   const theme = useTheme();
-  const [openPicker, setOpenPicker] = useState(false);
+  const [openPicker, setOpenPicker] = useState<boolean>(false);
 
   return (
     <Box
