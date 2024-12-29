@@ -12,6 +12,7 @@ export default function GeneralApp() {
           sx={{
             height: '100%',
             width: 'calc(100vw - 360px - 80px)',
+            backgroundColor: ' #F5F5F5',
           }}
         >
           {/* {Conversation} */}
