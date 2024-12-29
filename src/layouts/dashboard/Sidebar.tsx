@@ -17,7 +17,7 @@ import { AntSwitch } from '../../components/global/AntSwitch';
 
 export default function Sidebar() {
   const theme = useTheme();
-  const [selectedIcon, setSelectedIcon] = useState(0);
+  const [selectedIcon, setSelectedIcon] = useState<number>(0);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const handleClick = (event: MouseEvent<HTMLButtonElement>) => {

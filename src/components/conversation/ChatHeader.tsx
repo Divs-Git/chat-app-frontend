@@ -9,8 +9,12 @@ import {
 import { StyledBadge } from '../global/StyledBadge';
 import { faker } from '@faker-js/faker';
 import { CaretDown, MagnifyingGlass, Phone, VideoCamera } from 'phosphor-react';
+import { useDispatch } from 'react-redux';
+import { ToggleSideDrawer } from '../../redux/slices/app';
+import { AppDispatch } from '../../redux/store';
 
 export default function ChatHeader() {
+  const dispatch = useDispatch<AppDispatch>();
   return (
     <Box
       sx={{
@@ -26,7 +30,11 @@ export default function ChatHeader() {
         justifyContent={'space-between'}
         sx={{ width: '100%', height: '100%' }}
       >
-        <Stack direction={'row'} spacing={2}>
+        <Stack
+          direction={'row'}
+          spacing={2}
+          onClick={() => dispatch(ToggleSideDrawer())}
+        >
           <Box>
             <StyledBadge
               overlap='circular'
