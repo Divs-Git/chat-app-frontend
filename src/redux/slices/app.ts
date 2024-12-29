@@ -1,17 +1,17 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { AppDispatch } from '../store';
 
-interface SidebarState {
+interface SideDrawerState {
   open: boolean;
   type: 'CONTACT' | 'STARRED' | 'SHARED';
 }
 
 interface AppState {
-  sidebar: SidebarState;
+  sidedrawer: SideDrawerState;
 }
 
 const initialState: AppState = {
-  sidebar: {
+  sidedrawer: {
     open: false,
     type: 'CONTACT', // 'CONTACT' | 'STARRED' | 'SHARED'
   },
@@ -21,15 +21,15 @@ const slice = createSlice({
   name: 'app',
   initialState,
   reducers: {
-    // Toggle sidebar
+    // Toggle sidedrawer
     toggleSideDrawer(state) {
-      state.sidebar.open = !state.sidebar.open;
+      state.sidedrawer.open = !state.sidedrawer.open;
     },
     setSideDrawerType(
       state,
       action: PayloadAction<{ type: 'CONTACT' | 'STARRED' | 'SHARED' }>
     ) {
-      state.sidebar.type = action.payload.type;
+      state.sidedrawer.type = action.payload.type;
     },
   },
 });
