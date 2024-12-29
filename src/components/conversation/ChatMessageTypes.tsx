@@ -2,12 +2,16 @@ import {
   Box,
   Divider,
   IconButton,
+  Menu,
+  MenuItem,
   Stack,
   Typography,
   useTheme,
 } from '@mui/material';
-import { DownloadSimple, Image } from 'phosphor-react';
+import { DotsThreeVertical, DownloadSimple, Image } from 'phosphor-react';
 import { Link } from 'react-router-dom';
+import { Message_options } from '../../data/constants';
+import { MouseEvent, useState } from 'react';
 
 type ChatProps = {
   type: string;
@@ -62,6 +66,8 @@ function TextMessage({ chat }: { chat: ChatProps }) {
           {chat.message}
         </Typography>
       </Box>
+      {/* {Message Options} */}
+      <MessageOptions />
     </Stack>
   );
 }
@@ -104,6 +110,7 @@ function ImageMessage({ chat }: { chat: ChatProps }) {
           </Typography>
         </Stack>
       </Box>
+      <MessageOptions />
     </Stack>
   );
 }
@@ -148,6 +155,7 @@ function ReplyMessage({ chat }: { chat: ChatProps }) {
           </Typography>
         </Stack>
       </Box>
+      <MessageOptions />
     </Stack>
   );
 }
@@ -210,6 +218,7 @@ function LinkMessage({ chat }: { chat: ChatProps }) {
           </Stack>
         </Stack>
       </Box>
+      <MessageOptions />
     </Stack>
   );
 }
@@ -256,7 +265,50 @@ function DocMessage({ chat }: { chat: ChatProps }) {
           </Typography>
         </Stack>
       </Box>
+      <MessageOptions />
     </Stack>
+  );
+}
+
+function MessageOptions() {
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const open = Boolean(anchorEl);
+  const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+  return (
+    <>
+      <IconButton
+        id='basic-button'
+        aria-controls={open ? 'basic-menu' : undefined}
+        aria-haspopup='true'
+        aria-expanded={open ? 'true' : undefined}
+        onClick={handleClick}
+        sx={{ height: 30, width: 30 }}
+      >
+        <DotsThreeVertical size={20} />
+      </IconButton>
+      <Menu
+        id='basic-menu'
+        anchorEl={anchorEl}
+        open={open}
+        onClose={handleClose}
+        MenuListProps={{
+          'aria-labelledby': 'basic-button',
+        }}
+      >
+        <Stack spacing={1} px={1}>
+          {Message_options.map((option, index) => (
+            <MenuItem key={index} onClick={handleClose}>
+              {option.title}
+            </MenuItem>
+          ))}
+        </Stack>
+      </Menu>
+    </>
   );
 }
 
