@@ -1,6 +1,7 @@
 import { Box, Stack } from '@mui/material';
 import ChatHeader from './ChatHeader';
 import ChatFooter from './ChatFooter';
+import ChatMessages from './ChatMessages';
 
 export default function Conversation() {
   return (
@@ -14,8 +15,12 @@ export default function Conversation() {
           sx={{
             flexGrow: 1,
             width: '100%',
+            height: '100%',
+            overflowY: 'auto',
           }}
-        ></Box>
+        >
+          <ChatMessages />
+        </Box>
 
         {/* {Chat Input} */}
         <ChatFooter />
