@@ -1,8 +1,10 @@
 import {
   Box,
+  Fab,
   IconButton,
   InputAdornment,
   Stack,
+  Tooltip,
   useTheme,
 } from '@mui/material';
 import { StyledInput } from '../global/StyledInput';
@@ -10,12 +12,14 @@ import { LinkSimple, PaperPlaneTilt, Smiley } from 'phosphor-react';
 import data from '@emoji-mart/data';
 import Picker from '@emoji-mart/react';
 import { useState } from 'react';
+import { SpeedDialActions } from '../../data/constants';
 
 type ChatInputProps = {
   setOpenPicker: (value: (prev: boolean) => boolean) => void;
 };
 
 function ChatInput({ setOpenPicker }: ChatInputProps) {
+  const [openAction, setOpenAction] = useState(false);
   return (
     <StyledInput
       fullWidth={true}
@@ -25,11 +29,32 @@ function ChatInput({ setOpenPicker }: ChatInputProps) {
         input: {
           disableUnderline: true,
           startAdornment: (
-            <InputAdornment position='end'>
-              <IconButton>
-                <LinkSimple />
-              </IconButton>
-            </InputAdornment>
+            <Stack width={'max-content'}>
+              <Stack
+                position={'relative'}
+                display={openAction ? 'inline-block' : 'none'}
+              >
+                {SpeedDialActions.map((action, index) => (
+                  <Tooltip title={action.title} key={index} placement='right'>
+                    <Fab
+                      sx={{
+                        position: 'absolute',
+                        top: -action.y,
+                        backgroundColor: action.color,
+                      }}
+                      color='primary'
+                    >
+                      {action.icon}
+                    </Fab>
+                  </Tooltip>
+                ))}
+              </Stack>
+              <InputAdornment position='end'>
+                <IconButton onClick={() => setOpenAction((prev) => !prev)}>
+                  <LinkSimple />
+                </IconButton>
+              </InputAdornment>
+            </Stack>
           ),
           endAdornment: (
             <InputAdornment position='end'>
