@@ -1,6 +1,16 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { AppDispatch } from '../store';
 
-const initialState = {
+interface SidebarState {
+  open: boolean;
+  type: 'CONTACT' | 'STARRED' | 'SHARED';
+}
+
+interface AppState {
+  sidebar: SidebarState;
+}
+
+const initialState: AppState = {
   sidebar: {
     open: false,
     type: 'CONTACT', // 'CONTACT' | 'STARRED' | 'SHARED'
@@ -12,10 +22,13 @@ const slice = createSlice({
   initialState,
   reducers: {
     // Toggle sidebar
-    toggleSidebar(state) {
+    toggleSideDrawer(state) {
       state.sidebar.open = !state.sidebar.open;
     },
-    setSidebarType(state, action) {
+    setSideDrawerType(
+      state,
+      action: PayloadAction<{ type: 'CONTACT' | 'STARRED' | 'SHARED' }>
+    ) {
       state.sidebar.type = action.payload.type;
     },
   },
@@ -23,3 +36,16 @@ const slice = createSlice({
 
 // Reducer
 export default slice.reducer;
+
+// Thunks
+export function ToggleSideDrawer() {
+  return async (dispatch: AppDispatch) => {
+    dispatch(slice.actions.toggleSideDrawer());
+  };
+}
+
+export function SetSideDrawerType(type: 'CONTACT' | 'STARRED' | 'SHARED') {
+  return async (dispatch: AppDispatch) => {
+    dispatch(slice.actions.setSideDrawerType({ type }));
+  };
+}

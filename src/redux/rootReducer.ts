@@ -3,7 +3,6 @@ import storage from 'redux-persist/lib/storage';
 import appReducer from './slices/app';
 
 // slices
-
 const rootPersistConfig = {
   key: 'root',
   storage,
