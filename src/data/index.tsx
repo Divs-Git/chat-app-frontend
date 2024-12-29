@@ -1,20 +1,4 @@
 import { faker } from '@faker-js/faker';
-import { ChatCircleDots, Users, Phone } from 'phosphor-react';
-
-const Nav_Buttons = [
-  {
-    index: 0,
-    icon: <ChatCircleDots />,
-  },
-  {
-    index: 1,
-    icon: <Users />,
-  },
-  {
-    index: 2,
-    icon: <Phone />,
-  },
-];
 
 const ChatList = [
   {
@@ -169,4 +153,4 @@ const Chat_History = [
   },
 ];
 
-export { Nav_Buttons, ChatList, Chat_History };
+export { ChatList, Chat_History };

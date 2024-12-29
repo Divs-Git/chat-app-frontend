@@ -1,14 +1,31 @@
-import { Avatar, Box, Divider, IconButton, Stack, useTheme } from '@mui/material';
+import {
+  Avatar,
+  Box,
+  Divider,
+  IconButton,
+  Menu,
+  MenuItem,
+  Stack,
+  useTheme,
+} from '@mui/material';
 import Logo from '../../assets/logo/chat-icon.webp';
-import { Nav_Buttons } from '../../data';
+import { Nav_Buttons, Profile_Menu } from '../../data/constants';
 import { Gear } from 'phosphor-react';
-import { useState } from 'react';
+import { MouseEvent, useState } from 'react';
 import { faker } from '@faker-js/faker';
 import { AntSwitch } from '../../components/global/AntSwitch';
 
 export default function Sidebar() {
   const theme = useTheme();
   const [selectedIcon, setSelectedIcon] = useState(0);
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const open = Boolean(anchorEl);
+  const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
 
   return (
     <Box
@@ -98,7 +115,43 @@ export default function Sidebar() {
         <Stack spacing={4}>
           {/* {switch} */}
           <AntSwitch defaultChecked />
-          <Avatar src={faker.image.avatar()} />
+          <IconButton
+            id='basic-button'
+            aria-controls={open ? 'basic-menu' : undefined}
+            aria-haspopup='true'
+            aria-expanded={open ? 'true' : undefined}
+            onClick={handleClick}
+          >
+            <Avatar src={faker.image.avatar()} />
+          </IconButton>
+
+          <Menu
+            id='basic-menu'
+            anchorEl={anchorEl}
+            open={open}
+            onClose={handleClose}
+            MenuListProps={{
+              'aria-labelledby': 'basic-button',
+            }}
+            anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+            transformOrigin={{ vertical: 'bottom', horizontal: 'left' }}
+          >
+            <Stack spacing={1} px={1}>
+              {Profile_Menu.map((option, index) => (
+                <MenuItem key={index} onClick={handleClose}>
+                  <Stack
+                    sx={{ width: '100%' }}
+                    direction={'row'}
+                    alignItems={'center'}
+                    justifyContent={'space-between'}
+                  >
+                    <span>{option.title}</span>
+                    {option.icon}
+                  </Stack>
+                </MenuItem>
+              ))}
+            </Stack>
+          </Menu>
         </Stack>
       </Stack>
     </Box>

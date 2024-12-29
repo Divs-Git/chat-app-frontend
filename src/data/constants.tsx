@@ -1,4 +1,15 @@
-import { Camera, File, Image, Sticker, User } from 'phosphor-react';
+import {
+  Camera,
+  ChatCircleDots,
+  File,
+  Gear,
+  Image,
+  Phone,
+  SignOut,
+  Sticker,
+  User,
+  Users,
+} from 'phosphor-react';
 
 const SpeedDialActions = [
   {
@@ -33,4 +44,55 @@ const SpeedDialActions = [
   },
 ];
 
-export { SpeedDialActions };
+const Profile_Menu = [
+  {
+    title: 'Profile',
+    icon: <User />,
+  },
+  {
+    title: 'Settings',
+    icon: <Gear />,
+  },
+  {
+    title: 'Profile',
+    icon: <SignOut />,
+  },
+];
+
+const Nav_Buttons = [
+  {
+    index: 0,
+    icon: <ChatCircleDots />,
+  },
+  {
+    index: 1,
+    icon: <Users />,
+  },
+  {
+    index: 2,
+    icon: <Phone />,
+  },
+];
+
+const Message_options = [
+  {
+    title: 'Reply',
+  },
+  {
+    title: 'React to message',
+  },
+  {
+    title: 'Forward message',
+  },
+  {
+    title: 'Star message',
+  },
+  {
+    title: 'Report',
+  },
+  {
+    title: 'Delete Message',
+  },
+];
+
+export { SpeedDialActions, Profile_Menu, Nav_Buttons, Message_options };
