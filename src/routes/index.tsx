@@ -22,7 +22,10 @@ export default function Router() {
     {
       path: '/',
       element: <DashboardLayout />,
-      children: [{ path: 'app', element: <GeneralApp /> }],
+      children: [
+        { path: 'app', element: <GeneralApp /> },
+        { path: 'settings', element: <Settings /> },
+      ],
     },
   ]);
 }
@@ -30,3 +33,5 @@ export default function Router() {
 const GeneralApp = Loadable(
   lazy(() => import('../pages/dashboard/GeneralApp'))
 );
+
+const Settings = Loadable(lazy(() => import('../pages/dashboard/Settings')));
