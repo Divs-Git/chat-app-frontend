@@ -6,7 +6,7 @@ export default function Login() {
   return (
     <>
       <Stack spacing={2} sx={{ my: 5, position: 'relative' }}>
-        <Typography variant='h4'>Login to Chatify</Typography>
+        <Typography variant='h4'>Login to Chatr</Typography>
 
         <Stack direction={'row'} spacing={'0.5'}>
           <Typography variant='body2'>

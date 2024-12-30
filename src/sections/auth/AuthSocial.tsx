@@ -7,7 +7,6 @@ export default function AuthSocial() {
     <Box>
       <Divider
         sx={{
-          my: 2.5,
           typography: 'overline',
           color: 'text.disabled',
           '&::before, &::after': { borderTopStyle: 'dashed' },
