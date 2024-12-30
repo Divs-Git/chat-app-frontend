@@ -13,19 +13,23 @@ import { Link } from 'react-router-dom';
 import { Message_options } from '../../data/constants';
 import { MouseEvent, useState } from 'react';
 
-type ChatProps = {
-  type: string;
-  text?: string;
-  message?: string;
-  subtype?: string;
-  img?: string;
-  incoming?: boolean;
-  outgoing?: boolean;
-  preview?: string;
-  reply?: string;
-};
+interface ChatProps {
+  chat: {
+    type: string;
+    text?: string;
+    message?: string;
+    subtype?: string;
+    img?: string;
+    incoming?: boolean;
+    outgoing?: boolean;
+    preview?: string;
+    reply?: string;
+  };
 
-function Timeline({ chat }: { chat: ChatProps }) {
+  menu?: boolean;
+}
+
+function Timeline({ chat }: ChatProps) {
   const theme = useTheme();
   return (
     <Stack
@@ -42,7 +46,7 @@ function Timeline({ chat }: { chat: ChatProps }) {
   );
 }
 
-function TextMessage({ chat }: { chat: ChatProps }) {
+function TextMessage({ chat, menu }: ChatProps) {
   const theme = useTheme();
   return (
     <Stack
@@ -67,12 +71,12 @@ function TextMessage({ chat }: { chat: ChatProps }) {
         </Typography>
       </Box>
       {/* {Message Options} */}
-      <MessageOptions />
+      {menu && <MessageOptions />}
     </Stack>
   );
 }
 
-function ImageMessage({ chat }: { chat: ChatProps }) {
+function ImageMessage({ chat, menu }: ChatProps) {
   const theme = useTheme();
 
   return (
@@ -110,12 +114,13 @@ function ImageMessage({ chat }: { chat: ChatProps }) {
           </Typography>
         </Stack>
       </Box>
-      <MessageOptions />
+      {/* {Message Options} */}
+      {menu && <MessageOptions />}
     </Stack>
   );
 }
 
-function ReplyMessage({ chat }: { chat: ChatProps }) {
+function ReplyMessage({ chat, menu }: ChatProps) {
   const theme = useTheme();
   return (
     <Stack
@@ -155,12 +160,13 @@ function ReplyMessage({ chat }: { chat: ChatProps }) {
           </Typography>
         </Stack>
       </Box>
-      <MessageOptions />
+      {/* {Message Options} */}
+      {menu && <MessageOptions />}
     </Stack>
   );
 }
 
-function LinkMessage({ chat }: { chat: ChatProps }) {
+function LinkMessage({ chat, menu }: ChatProps) {
   const theme = useTheme();
   return (
     <Stack
@@ -218,12 +224,13 @@ function LinkMessage({ chat }: { chat: ChatProps }) {
           </Stack>
         </Stack>
       </Box>
-      <MessageOptions />
+      {/* {Message Options} */}
+      {menu && <MessageOptions />}
     </Stack>
   );
 }
 
-function DocMessage({ chat }: { chat: ChatProps }) {
+function DocMessage({ chat, menu }: ChatProps) {
   const theme = useTheme();
   return (
     <Stack
@@ -265,7 +272,8 @@ function DocMessage({ chat }: { chat: ChatProps }) {
           </Typography>
         </Stack>
       </Box>
-      <MessageOptions />
+      {/* {Message Options} */}
+      {menu && <MessageOptions />}
     </Stack>
   );
 }
