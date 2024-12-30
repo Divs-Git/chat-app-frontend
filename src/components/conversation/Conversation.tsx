@@ -19,7 +19,7 @@ export default function Conversation() {
             overflowY: 'auto',
           }}
         >
-          <ChatMessages />
+          <ChatMessages menu={true} />
         </Box>
 
         {/* {Chat Input} */}

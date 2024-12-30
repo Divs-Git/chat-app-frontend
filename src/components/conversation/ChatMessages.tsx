@@ -9,7 +9,7 @@ import {
   Timeline,
 } from './ChatMessageTypes';
 
-export default function ChatMessages() {
+export default function ChatMessages({ menu }: { menu: boolean }) {
   return (
     <Box p={3}>
       <Stack spacing={3}>
@@ -21,16 +21,16 @@ export default function ChatMessages() {
             case 'msg':
               switch (chat.subtype) {
                 case 'img':
-                  return <ImageMessage key={index} chat={chat} />;
+                  return <ImageMessage key={index} chat={chat} menu={menu} />;
                 case 'doc':
-                  return <DocMessage key={index} chat={chat} />;
+                  return <DocMessage key={index} chat={chat} menu={menu} />;
                 case 'link':
-                  return <LinkMessage key={index} chat={chat} />;
+                  return <LinkMessage key={index} chat={chat} menu={menu} />;
                 case 'reply':
-                  return <ReplyMessage key={index} chat={chat} />;
+                  return <ReplyMessage key={index} chat={chat} menu={menu} />;
                 default:
                   // text messag
-                  return <TextMessage key={index} chat={chat} />;
+                  return <TextMessage key={index} chat={chat} menu={menu} />;
               }
               break;
             default:

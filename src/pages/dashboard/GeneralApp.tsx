@@ -1,8 +1,10 @@
 import { Box, Stack } from '@mui/material';
 import Chats from './Chats/Chats';
 import Conversation from '../../components/conversation/Conversation';
-import Contact from '../../components/contact';
+import Contact from '../../components/sidedrawer/Contact';
 import { useSelector } from 'react-redux';
+import SharedMessages from '../../components/sidedrawer/SharedMessages';
+import StarredMessages from '../../components/sidedrawer/StarredMessages';
 
 type SideDrawerType = 'CONTACT' | 'STARRED' | 'SHARED';
 
@@ -42,7 +44,19 @@ export default function GeneralApp() {
         </Box>
 
         {/* {Contact} */}
-        {sidedrawer.open && <Contact />}
+        {sidedrawer.open &&
+          (() => {
+            switch (sidedrawer.type) {
+              case 'CONTACT':
+                return <Contact />;
+              case 'STARRED':
+                return <StarredMessages />;
+              case 'SHARED':
+                return <SharedMessages />;
+              default:
+                return <></>;
+            }
+          })()}
       </Stack>
     </>
   );
