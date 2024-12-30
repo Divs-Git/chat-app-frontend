@@ -3,6 +3,7 @@ import { ComponentType, lazy, Suspense } from 'react';
 
 // layouts
 import DashboardLayout from '../layouts/dashboard';
+import MainLayout from '../layouts/main';
 
 // loader
 import LoadingScreen from '../components/global/LoadingScreen';
@@ -27,11 +28,18 @@ export default function Router() {
         { path: 'settings', element: <Settings /> },
       ],
     },
+    {
+      path: '/auth',
+      element: <MainLayout />,
+      children: [{ path: 'login', element: <LoginPage /> }],
+    },
   ]);
 }
 
 const GeneralApp = Loadable(
   lazy(() => import('../pages/dashboard/GeneralApp'))
 );
+
+const LoginPage = Loadable(lazy(() => import('../pages/auth/Login')));
 
 const Settings = Loadable(lazy(() => import('../pages/dashboard/Settings')));
