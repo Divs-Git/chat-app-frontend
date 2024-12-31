@@ -16,9 +16,21 @@ import { MagnifyingGlass, Plus } from 'phosphor-react';
 import { ChatList } from '../../data';
 import ChatElement from '../../components/ChatElement';
 import '../../assets/styles/Chats.scss';
+import CreateGroup from '../../sections/main/CreateGroup';
+import { useState } from 'react';
 
 export default function Groups() {
   const theme = useTheme();
+  const [openDialog, setOpenDialog] = useState<boolean>(false);
+
+  function handleOpenDialog() {
+    setOpenDialog(true);
+  }
+
+  function handleCloseDialog() {
+    setOpenDialog(false);
+  }
+
   return (
     <>
       <Stack direction={'row'} sx={{ width: '100%' }}>
@@ -54,7 +66,7 @@ export default function Groups() {
               <Typography variant='subtitle2' component={Link} underline='none'>
                 Create New Group
               </Typography>
-              <IconButton>
+              <IconButton onClick={() => handleOpenDialog()}>
                 <Plus style={{ color: theme.palette.primary.main }} size={22} />
               </IconButton>
             </Stack>
@@ -87,6 +99,11 @@ export default function Groups() {
         {/* Right section */}
         {/* TODO: Implement the conversation section */}
       </Stack>
+
+      {/* Create Group Dialog */}
+      {openDialog && (
+        <CreateGroup open={openDialog} handleClose={handleCloseDialog} />
+      )}
     </>
   );
 }
