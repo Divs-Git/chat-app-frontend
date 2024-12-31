@@ -1,5 +1,5 @@
 import { Box, Stack } from '@mui/material';
-import Chats from './Chats/Chats';
+import Chats from './Chats';
 import Conversation from '../../components/conversation/Conversation';
 import Contact from '../../components/sidedrawer/Contact';
 import { useSelector } from 'react-redux';

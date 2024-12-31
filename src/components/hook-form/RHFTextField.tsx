@@ -15,6 +15,8 @@ interface RHFTextFieldProps {
   type?: string;
   helperText?: ReactNode;
   InputProps?: InputPropsType;
+  multiline?: boolean;
+  maxrow?: number;
 }
 
 export default function RHFTextField({
@@ -22,6 +24,7 @@ export default function RHFTextField({
   label,
   type,
   helperText,
+  maxrow = 1,
   ...rest
 }: RHFTextFieldProps) {
   const { control } = useFormContext();
@@ -32,9 +35,15 @@ export default function RHFTextField({
       control={control}
       render={({ field, fieldState: { error } }) => (
         <TextField
+          maxRows={maxrow}
           label={label}
           {...field}
           type={type}
+          value={
+            typeof field.value === 'number' && field.value === 0
+              ? ''
+              : field.value
+          }
           fullWidth
           error={!!error}
           helperText={error ? error.message : helperText}

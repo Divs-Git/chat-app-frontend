@@ -1,8 +1,13 @@
 import { Container, Stack } from '@mui/material';
-import { Outlet } from 'react-router-dom';
+import { Navigate, Outlet } from 'react-router-dom';
 import Logo from '../../assets/logo/chat-icon.webp';
 
+const isAuthenticated = true;
+
 export default function MainLayout() {
+  if (isAuthenticated) {
+    return <Navigate to='/app' />;
+  }
   return (
     <>
       <Container sx={{ mt: 5 }} maxWidth={'sm'}>
