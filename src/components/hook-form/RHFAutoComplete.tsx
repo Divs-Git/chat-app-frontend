@@ -35,7 +35,6 @@ export default function RHFAutoComplete({
       control={control}
       render={({ field, fieldState: { error } }) => (
         <Autocomplete
-          options={[]}
           {...field}
           fullWidth
           value={

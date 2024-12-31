@@ -25,7 +25,7 @@ export default function Router() {
       element: <DashboardLayout />,
       children: [
         { path: 'app', element: <GeneralApp /> },
-        { path: 'groups', element: <GroupPage /> },
+        { path: 'group', element: <GroupPage /> },
         { path: 'call', element: <CallPage /> },
         { path: 'settings', element: <Settings /> },
       ],
