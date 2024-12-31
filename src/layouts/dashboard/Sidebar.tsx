@@ -14,13 +14,45 @@ import { Gear } from 'phosphor-react';
 import { MouseEvent, useState } from 'react';
 import { faker } from '@faker-js/faker';
 import { AntSwitch } from '../../components/global/AntSwitch';
+import { useNavigate } from 'react-router-dom';
+
+function getPath(index: number) {
+  switch (index) {
+    case 0:
+      return '/app';
+    case 1:
+      return '/group';
+    case 2:
+      return '/call';
+    case 3:
+      return '/settings';
+    default:
+      return '/app';
+  }
+}
+
+function getMenuPath(index: number) {
+  switch (index) {
+    case 0:
+      return '/profile';
+    case 1:
+      return '/settings';
+    case 2:
+      // TODO: update token and set isAuthenticated to false
+      return '/auth/login';
+    default:
+      return '/profile';
+  }
+}
 
 export default function Sidebar() {
   const theme = useTheme();
   const [selectedIcon, setSelectedIcon] = useState<number>(0);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const navigate = useNavigate();
+
   const open = Boolean(anchorEl);
-  const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
+  const handleClick = (event: MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
   const handleClose = () => {
@@ -82,7 +114,10 @@ export default function Sidebar() {
                 </Box>
               ) : (
                 <IconButton
-                  onClick={() => setSelectedIcon(el.index)}
+                  onClick={() => {
+                    navigate(getPath(el.index));
+                    setSelectedIcon(el.index);
+                  }}
                   sx={{ width: 'max-content', color: 'black' }}
                   key={el.index}
                 >
@@ -105,7 +140,10 @@ export default function Sidebar() {
             ) : (
               <IconButton
                 sx={{ width: 'max-content', color: 'black' }}
-                onClick={() => setSelectedIcon(3)}
+                onClick={() => {
+                  navigate(getPath(3));
+                  setSelectedIcon(3);
+                }}
               >
                 <Gear />
               </IconButton>
@@ -138,12 +176,17 @@ export default function Sidebar() {
           >
             <Stack spacing={1} px={1}>
               {Profile_Menu.map((option, index) => (
-                <MenuItem key={index} onClick={handleClose}>
+                <MenuItem key={index}>
                   <Stack
                     sx={{ width: '100%' }}
                     direction={'row'}
                     alignItems={'center'}
                     justifyContent={'space-between'}
+                    onClick={(e) => {
+                      handleClick(e);
+                      navigate(getMenuPath(index));
+                      handleClose();
+                    }}
                   >
                     <span>{option.title}</span>
                     {option.icon}
