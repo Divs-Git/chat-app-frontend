@@ -25,6 +25,7 @@ export default function Router() {
       element: <DashboardLayout />,
       children: [
         { path: 'app', element: <GeneralApp /> },
+        { path: 'groups', element: <GroupPage /> },
         { path: 'settings', element: <Settings /> },
       ],
     },
@@ -51,5 +52,5 @@ const ResetPassword = Loadable(
   lazy(() => import('../pages/auth/ResetPassword'))
 );
 const NewPassword = Loadable(lazy(() => import('../pages/auth/NewPassword')));
-
 const Settings = Loadable(lazy(() => import('../pages/dashboard/Settings')));
+const GroupPage = Loadable(lazy(() => import('../pages/dashboard/GroupPage')));

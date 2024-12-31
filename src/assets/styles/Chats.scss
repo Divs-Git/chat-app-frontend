@@ -2,6 +2,7 @@
   overflow-y: hidden;
   flex-grow: 1;
   height: 100%;
+  position: relative;
 
   &:hover {
     overflow-y: auto;
@@ -10,6 +11,8 @@
   &::-webkit-scrollbar {
     width: 8px;
     height: 8px;
+    position: absolute;
+    z-index: 9999;
   }
 
   &::-webkit-scrollbar-track {
