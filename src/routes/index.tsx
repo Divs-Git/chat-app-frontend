@@ -17,6 +17,7 @@ const Loadable =
       </Suspense>
     );
   };
+
 // routes
 export default function Router() {
   return useRoutes([

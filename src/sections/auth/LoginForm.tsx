@@ -14,8 +14,12 @@ import {
 import RHFTextField from '../../components/hook-form/RHFTextField';
 import { Eye, EyeSlash } from 'phosphor-react';
 import { Link as RouterLink } from 'react-router-dom';
+import { LoginUser } from '../../redux/slices/auth';
+import { useDispatch } from 'react-redux';
+import { AppDispatch } from '../../redux/store';
 
 export default function LoginForm() {
+  const dispatch = useDispatch<AppDispatch>();
   const [showPassword, setShowPassword] = useState<boolean>(false);
 
   const LoginSchema = Yup.object().shape({
@@ -51,6 +55,8 @@ export default function LoginForm() {
   const onSubmit = async (data: FormValues) => {
     try {
       // submit data to server
+      dispatch(LoginUser(data));
+
       console.log(data);
     } catch (error: unknown) {
       if (error instanceof Error) {
