@@ -1,14 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { AppDispatch } from '../store';
-
-interface SideDrawerState {
-  open: boolean;
-  type: 'CONTACT' | 'STARRED' | 'SHARED';
-}
-
-interface AppState {
-  sidedrawer: SideDrawerState;
-}
+import { AppState } from '../../types/authTypes';
 
 const initialState: AppState = {
   sidedrawer: {

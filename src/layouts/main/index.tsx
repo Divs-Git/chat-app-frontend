@@ -1,11 +1,13 @@
 import { Container, Stack } from '@mui/material';
 import { Navigate, Outlet } from 'react-router-dom';
 import Logo from '../../assets/logo/chat-icon.webp';
-
-const isAuthenticated = true;
+import { useSelector } from 'react-redux';
+import { RootState } from '../../redux/store';
 
 export default function MainLayout() {
-  if (isAuthenticated) {
+  const { isLoggedIn } = useSelector((state: RootState) => state.auth);
+
+  if (isLoggedIn) {
     return <Navigate to='/app' />;
   }
   return (
