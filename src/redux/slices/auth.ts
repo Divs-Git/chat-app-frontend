@@ -58,3 +58,9 @@ export function LoginUser(formValues: FormValues) {
       });
   };
 }
+
+export function LogoutUser() {
+  return async (dispatch: AppDispatch) => {
+    dispatch(slice.actions.logout());
+  };
+}
