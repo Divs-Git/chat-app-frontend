@@ -60,8 +60,6 @@ export default function ResetPasswordForm() {
     try {
       // submit data to server
       dispatch(NewPassword({ ...data, token: queryParams.get('code')! }));
-      console.log(data);
-      console.log(queryParams.get('code'));
     } catch (error: unknown) {
       if (error instanceof Error) {
         console.log(error.message);
