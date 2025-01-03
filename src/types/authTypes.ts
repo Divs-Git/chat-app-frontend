@@ -1,5 +1,12 @@
 export interface AppState {
   sidedrawer: SideDrawerState;
+  snackbar: SnackbarState;
+}
+
+export interface SnackbarState {
+  open: boolean | null;
+  message: string | null;
+  severity: 'success' | 'error' | 'warning' | 'info' | null;
 }
 
 export interface SideDrawerState {

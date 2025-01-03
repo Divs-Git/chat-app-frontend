@@ -2,6 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import axios from '../../utils/axios.ts';
 import { AppDispatch } from '../store.ts';
 import { RootState } from '../../types/authTypes.ts';
+import { ShowSnackbar } from './app.ts';
 
 const initialState = {
   isLoggedIn: false,
@@ -59,9 +60,19 @@ export function LoginUser(formValues: FormValues) {
         dispatch(
           slice.actions.login({ isLoggedIn: true, token: response.data.token })
         );
+
+        dispatch(
+          ShowSnackbar({ message: response.data.message, severity: 'success' })
+        );
       })
       .catch((error) => {
         console.log(error);
+        dispatch(
+          ShowSnackbar({
+            message: error.response.data.message,
+            severity: 'error',
+          })
+        );
       });
   };
 }
@@ -69,6 +80,9 @@ export function LoginUser(formValues: FormValues) {
 export function LogoutUser() {
   return async (dispatch: AppDispatch) => {
     dispatch(slice.actions.logout());
+    dispatch(
+      ShowSnackbar({ message: 'Logged out successfully', severity: 'success' })
+    );
   };
 }
 

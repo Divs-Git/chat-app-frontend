@@ -41,7 +41,6 @@ export default function VerifyForm() {
 
   const onSubmit = (data: any) => {
     try {
-      // TODO: Implement verify code logic
       dispatch(
         VerifyEmail({
           email,
