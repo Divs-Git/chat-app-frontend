@@ -15,6 +15,9 @@ import { MouseEvent, useState } from 'react';
 import { faker } from '@faker-js/faker';
 import { AntSwitch } from '../../components/global/AntSwitch';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { AppDispatch } from '../../redux/store';
+import { LogoutUser } from '../../redux/slices/auth';
 
 function getPath(index: number) {
   switch (index) {
@@ -46,6 +49,7 @@ function getMenuPath(index: number) {
 }
 
 export default function Sidebar() {
+  const dispatch = useDispatch<AppDispatch>();
   const theme = useTheme();
   const [selectedIcon, setSelectedIcon] = useState<number>(0);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -184,8 +188,12 @@ export default function Sidebar() {
                     justifyContent={'space-between'}
                     onClick={(e) => {
                       handleClick(e);
-                      navigate(getMenuPath(index));
                       handleClose();
+                      if (index === 2) {
+                        dispatch(LogoutUser());
+                      } else {
+                        navigate(getMenuPath(index));
+                      }
                     }}
                   >
                     <span>{option.title}</span>

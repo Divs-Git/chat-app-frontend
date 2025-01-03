@@ -8,13 +8,16 @@ import {
   Button,
   IconButton,
   InputAdornment,
-  Link,
   Stack,
 } from '@mui/material';
 import RHFTextField from '../../components/hook-form/RHFTextField';
 import { Eye, EyeSlash } from 'phosphor-react';
+import { RegisterUser } from '../../redux/slices/auth';
+import { useDispatch } from 'react-redux';
+import { AppDispatch } from '../../redux/store';
 
 export default function RegisterForm() {
+  const dispatch = useDispatch<AppDispatch>();
   const [showPassword, setShowPassword] = useState<boolean>(false);
 
   const RegisterSchema = Yup.object().shape({
@@ -27,10 +30,10 @@ export default function RegisterForm() {
   });
 
   const defaultValues = {
-    firstName: 'John',
-    lastName: 'Doe',
-    email: 'john@gmail.com',
-    password: 'john123',
+    firstName: '',
+    lastName: '',
+    email: '',
+    password: '',
   };
 
   type FormValues = {
@@ -50,12 +53,13 @@ export default function RegisterForm() {
     reset,
     setError,
     handleSubmit,
-    formState: { errors, isSubmitting, isSubmitSuccessful },
+    formState: { errors },
   } = methods;
 
   const onSubmit = async (data: FormValues) => {
     try {
       // submit data to server
+      dispatch(RegisterUser(data));
       console.log(data);
     } catch (error: unknown) {
       if (error instanceof Error) {
