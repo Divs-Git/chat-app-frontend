@@ -12,29 +12,34 @@ import {
 } from '@mui/material';
 import RHFTextField from '../../components/hook-form/RHFTextField';
 import { Eye, EyeSlash } from 'phosphor-react';
+import { useDispatch } from 'react-redux';
+import { AppDispatch } from '../../redux/store';
+import { useSearchParams } from 'react-router-dom';
+import { NewPassword } from '../../redux/slices/auth';
 
 export default function NewPasswordForm() {
-  const [showNewPassword, setShowNewPassword] = useState<boolean>(false);
+  const dispatch = useDispatch<AppDispatch>();
+
+  const [queryParams] = useSearchParams();
+
+  const [showPassword, setShowNewPassword] = useState<boolean>(false);
   const [showConfirmPassword, setShowConfirmPassword] =
     useState<boolean>(false);
 
   const NewPasswordSchema = Yup.object().shape({
-    newPassword: Yup.string()
-      .required('New Password is required')
-      .max(16)
-      .min(8),
+    password: Yup.string().required('New Password is required').max(16).min(8),
     confirmPassword: Yup.string()
       .required('Confirm Password is required')
-      .oneOf([Yup.ref('newPassword')], 'Passwords must match'),
+      .oneOf([Yup.ref('password')], 'Passwords must match'),
   });
 
   const defaultValues = {
-    newPassword: '',
+    password: '',
     confirmPassword: '',
   };
 
   type FormValues = {
-    newPassword: string;
+    password: string;
     confirmPassword: string;
     afterSubmit?: string;
   };
@@ -54,6 +59,7 @@ export default function NewPasswordForm() {
   const onSubmit = async (data: FormValues) => {
     try {
       // submit data to server
+      dispatch(NewPassword({ ...data, token: queryParams.get('token')! }));
       console.log(data);
     } catch (error: unknown) {
       if (error instanceof Error) {
@@ -79,18 +85,18 @@ export default function NewPasswordForm() {
         )}
 
         <RHFTextField
-          name='newPassword'
+          name='password'
           label='New Password'
-          type={showNewPassword ? 'text' : 'password'}
+          type={showPassword ? 'text' : 'password'}
           InputProps={{
             endAdornment: (
               <InputAdornment position='end'>
                 <IconButton
-                  onClick={() => setShowNewPassword(!showNewPassword)}
+                  onClick={() => setShowNewPassword(!showPassword)}
                   edge='end'
                   size='large'
                 >
-                  {!showNewPassword ? <EyeSlash /> : <Eye />}
+                  {!showPassword ? <EyeSlash /> : <Eye />}
                 </IconButton>
               </InputAdornment>
             ),

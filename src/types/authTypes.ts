@@ -11,6 +11,8 @@ export interface AuthState {
   isLogged: boolean;
   token: string;
   isLoading: boolean;
+  email: string;
+  error: boolean;
 }
 
 export interface RootState {
