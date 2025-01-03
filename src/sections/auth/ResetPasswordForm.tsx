@@ -1,48 +1,67 @@
+import { useState } from 'react';
 import * as Yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import FormProvider from '../../components/hook-form/FormProvider';
 import { useForm } from 'react-hook-form';
-import { Alert, Button, Stack } from '@mui/material';
+import {
+  Alert,
+  Button,
+  IconButton,
+  InputAdornment,
+  Stack,
+} from '@mui/material';
 import RHFTextField from '../../components/hook-form/RHFTextField';
-import { ForgotPassword } from '../../redux/slices/auth';
+import { Eye, EyeSlash } from 'phosphor-react';
 import { useDispatch } from 'react-redux';
 import { AppDispatch } from '../../redux/store';
+import { useSearchParams } from 'react-router-dom';
+import { NewPassword } from '../../redux/slices/auth';
 
 export default function ResetPasswordForm() {
   const dispatch = useDispatch<AppDispatch>();
 
-  const ResetPasswordSchema = Yup.object().shape({
-    email: Yup.string()
-      .required('Email is required')
-      .email('Email must be a valid email address'),
+  const [queryParams] = useSearchParams();
+
+  const [showPassword, setShowNewPassword] = useState<boolean>(false);
+  const [showConfirmPassword, setShowConfirmPassword] =
+    useState<boolean>(false);
+
+  const NewPasswordSchema = Yup.object().shape({
+    password: Yup.string().required('New Password is required').max(16).min(8),
+    confirmPassword: Yup.string()
+      .required('Confirm Password is required')
+      .oneOf([Yup.ref('password')], 'Passwords must match'),
   });
 
   const defaultValues = {
-    email: 'dummy@gmail.com',
+    password: '',
+    confirmPassword: '',
   };
 
   type FormValues = {
-    email: string;
+    password: string;
+    confirmPassword: string;
     afterSubmit?: string;
   };
 
   const methods = useForm<FormValues>({
     defaultValues,
-    resolver: yupResolver(ResetPasswordSchema),
+    resolver: yupResolver(NewPasswordSchema),
   });
 
   const {
     reset,
     setError,
     handleSubmit,
-    formState: { errors, isSubmitting, isSubmitSuccessful },
+    formState: { errors },
   } = methods;
 
   const onSubmit = async (data: FormValues) => {
     try {
       // submit data to server
-      dispatch(ForgotPassword(data));
+      dispatch(NewPassword({ ...data, token: queryParams.get('code')! }));
       console.log(data);
+      console.log(queryParams.get('code'));
     } catch (error: unknown) {
       if (error instanceof Error) {
         console.log(error.message);
@@ -65,8 +84,43 @@ export default function ResetPasswordForm() {
         {!!errors.afterSubmit && (
           <Alert severity='error'>{errors.afterSubmit.message}</Alert>
         )}
-        <RHFTextField name='email' label='Email Address' />
 
+        <RHFTextField
+          name='password'
+          label='New Password'
+          type={showPassword ? 'text' : 'password'}
+          InputProps={{
+            endAdornment: (
+              <InputAdornment position='end'>
+                <IconButton
+                  onClick={() => setShowNewPassword(!showPassword)}
+                  edge='end'
+                  size='large'
+                >
+                  {!showPassword ? <EyeSlash /> : <Eye />}
+                </IconButton>
+              </InputAdornment>
+            ),
+          }}
+        />
+        <RHFTextField
+          name='confirmPassword'
+          label='Confirm Password'
+          type={showConfirmPassword ? 'text' : 'password'}
+          InputProps={{
+            endAdornment: (
+              <InputAdornment position='end'>
+                <IconButton
+                  onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                  edge='end'
+                  size='large'
+                >
+                  {!showConfirmPassword ? <EyeSlash /> : <Eye />}
+                </IconButton>
+              </InputAdornment>
+            ),
+          }}
+        />
         <Button
           fullWidth
           color='inherit'
@@ -79,7 +133,7 @@ export default function ResetPasswordForm() {
             '&:hover': { bgcolor: 'text.secondary' },
           }}
         >
-          Send Request
+          Submit
         </Button>
       </Stack>
     </FormProvider>

@@ -99,10 +99,21 @@ export function ForgotPassword(formValues: { email: string }) {
         }
       )
       .then((response) => {
-        console.log(response);
+        dispatch(
+          ShowSnackbar({ severity: 'success', message: response.data.message })
+        );
+        dispatch(
+          slice.actions.updateIsLoading({ isLoading: false, error: false })
+        );
       })
       .catch((error) => {
         console.log(error);
+        dispatch(
+          ShowSnackbar({
+            message: error.response.data.message,
+            severity: 'error',
+          })
+        );
       });
   };
 }
@@ -129,9 +140,18 @@ export function NewPassword(formValues: NewPasswordFormValues) {
         dispatch(
           slice.actions.login({ isLoggedIn: true, token: response.data.token })
         );
+        dispatch(
+          ShowSnackbar({ message: response.data.message, severity: 'success' })
+        );
       })
       .catch((error) => {
         console.log(error);
+        dispatch(
+          ShowSnackbar({
+            message: error.response.data.message,
+            severity: 'error',
+          })
+        );
       });
   };
 }
@@ -159,11 +179,20 @@ export function RegisterUser(formValues: RegisterFormValues) {
         dispatch(
           slice.actions.updateIsLoading({ isLoading: true, error: false })
         );
+        dispatch(
+          ShowSnackbar({ message: response.data.message, severity: 'success' })
+        );
       })
       .catch((error) => {
         console.log(error);
         dispatch(
           slice.actions.updateIsLoading({ isLoading: false, error: true })
+        );
+        dispatch(
+          ShowSnackbar({
+            message: error.response.data.message,
+            severity: 'error',
+          })
         );
       })
       .finally(() => {
@@ -186,9 +215,18 @@ export function VerifyEmail(formValues: { otp: string; email: string }) {
         dispatch(
           slice.actions.login({ isLoggedIn: true, token: response.data.token })
         );
+        dispatch(
+          ShowSnackbar({ message: response.data.message, severity: 'success' })
+        );
       })
       .catch((error) => {
         console.log(error);
+        dispatch(
+          ShowSnackbar({
+            message: error.response.data.message,
+            severity: 'error',
+          })
+        );
       });
   };
 }

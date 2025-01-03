@@ -22,6 +22,15 @@ export default function VerifyForm() {
     code6: Yup.string().required('Code is Required'),
   });
 
+  type FormValues = {
+    code1: string;
+    code2: string;
+    code3: string;
+    code4: string;
+    code5: string;
+    code6: string;
+  };
+
   const defaultValues = {
     code1: '',
     code2: '',
@@ -39,7 +48,7 @@ export default function VerifyForm() {
 
   const { handleSubmit } = methods;
 
-  const onSubmit = (data: any) => {
+  const onSubmit = (data: FormValues) => {
     try {
       dispatch(
         VerifyEmail({
